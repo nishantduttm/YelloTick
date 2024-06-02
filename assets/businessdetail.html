@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Business Details</title>
+</head>
+
+<body>
+    <div class="mainlogo container d-flex flex-column align-items-center justify-content-center">
+        <img class="stepmainlogo" src="./Assest/yellotickmainlogo.svg" alt="YelloTick Logo">
+        <img  src="./Assest/step3.png" alt="">
+    </div>
+    <div class="input-container-form  form d-flex flex-column align-items-center justify-content-center  ">
+        <p class="formtitle" style="margin-left: -8rem;">Business Details</p>
+        <div class="input-container1-form" style="margin-top: -1rem;"> 
+            <input type="text" placeholder="Number of Employees" oninput="toggleStarVisibility(this)">
+           
+        </div>
+        <div class="input-container1-form">
+            <input type="text" id="businessCategory" placeholder="Turnover Yearly">
+            <div class="dropdown-list d-flex  align-items-center justify-content-center" id="categorytoggle">
+                <img src="./Assest/Double Down black.png" alt="">
+           </div>
+        </div>
+        <div id="businessdetail" class="businessdetailmenuList"  style="display: none;">
+            <div class="tooltip-arrow"></div>
+            <ul class="d-flex flex-column align-items-center justify-content-center" id="categoryList">
+              
+                <li class="d-flex ">
+                    <p>Below 20 Lac</p>
+                    <div class="radio-btn-div">
+                        <input type="radio" name="selectcategory" >
+                    </div>
+                </li>
+                <li class="businessdetail-tooltip-step">
+                    <p class="horizontal-line"  ></p>
+                </li>   
+                <li class="d-flex text-start">
+                    <p>Below 1 Cr</p>
+                     <div class="radio-btn-div">
+                        <input type="radio" name="selectcategory" >
+                    </div>
+                </li>
+                <li class="businessdetail-tooltip-step">
+                   <p class="horizontal-line"   ></p>
+                </li>  
+                <li class="d-flex ">
+                    <p>Below 5 Cr</p>
+                     <div class="radio-btn-div">
+                        <input type="radio" name="selectcategory" >
+                    </div>
+                </li>
+                <li class="businessdetail-tooltip-step">
+                   <p class="horizontal-line"   ></p>
+                </li>  
+                <li class="d-flex ">
+                    <p>Below 10 Cr</p>
+                     <div class="radio-btn-div">
+                        <input type="radio" name="selectcategory" >
+                    </div>
+                </li>
+                <li class="businessdetail-tooltip-step">
+                   <p class="horizontal-line"   ></p>
+                </li>  
+                <li class="d-flex ">
+                    <p>Below 50 Cr</p>
+                     <div class="radio-btn-div">
+                        <input type="radio" name="selectcategory" >
+                    </div>
+                </li>
+                <li class="Businesslist-tooltip-step">
+                   <p class="horizontal-line"   ></p>
+                </li>  
+            </ul>
+         
+        </div>
+
+
+        <div class="input-container1-form">
+            <input type="text" placeholder="Upload Images of Shop" oninput="toggleStarVisibility(this)">
+            <i class="fa fa-star fa-20x star-with-image" style="color: #FFC40C;" aria-hidden="true" ></i>
+            <i class="fa-regular fa-images" style="font-weight: 400;position: absolute;right: 20%;"></i>
+        </div>
+
+        <div class="input-container1-form">
+            <input type="text" placeholder="Upload Rental Agreement" oninput="toggleStarVisibility(this)">
+            <i class="fa-regular fa-images" style="font-weight: 400;position: absolute;right: 22%;"></i>
+        </div>
+
+        <div class="input-container1-form">
+            <input type="text" placeholder="Upload Shop Act" oninput="toggleStarVisibility(this)">
+            <i class="fa-regular fa-images" style="font-weight: 400;position: absolute;right: 22%;"></i>
+        </div>
+
+        <div class="input-container1-form">
+            <input type="text" placeholder="Upload MSME certificate" oninput="toggleStarVisibility(this)">
+            <i class="fa-regular fa-images" style="font-weight: 400;position: absolute;right: 22%;"></i>
+        </div>
+        <div class="input-container1-form">
+            <input type="text" placeholder="Upload GST Certificate" oninput="toggleStarVisibility(this)">
+            <i class="fa-regular fa-images" style="font-weight: 400;position: absolute;right: 22%;"></i>
+          
+        </div>
+        <div class="request d-flex align-items-center justify-content-center mb-4 mt-3">
+            <div class="form-btn d-flex align-items-center justify-content-center" id="logbtn">
+                <button type class="custom-button" id="toggleButton"><span>Next</span>
+                    <i class="fa-solid fa-chevron-right" id="swipeButton" onclick="gonext()"></i></button>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </main>
+
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+    var categorytoggle = document.getElementById("categorytoggle");
+    var businessdetail = document.getElementById("businessdetail");
+       
+    categorytoggle.addEventListener("click", function() {
+        if (businessdetail.style.display === "none" || businessdetail.style.display === "") {
+            businessdetail.style.display = "block";
+        } else {
+            businessdetail.style.display = "none";
+        }
+    });
+});
+
+
+
+
+function moverclass() {
+            let elem = document.getElementById('toggleButton'),
+                div = document.getElementById('swipeButton'),
+                oldX = 0,
+                mousedown = false;
+            originalLeft = div.offsetLeft;
+
+
+            function start(e) {
+                mousedown = true;
+                let clientX = e.clientX || e.touches[0].clientX;
+
+                oldX = clientX - div.offsetLeft;
+
+            }
+
+            function end(e) {
+                mousedown = false;
+                div.style.left = originalLeft + 'px';
+
+            }
+
+            function move(e) {
+                if (mousedown) {
+                    let clientX = e.clientX || e.touches[0].clientX;
+                    let newX = clientX - oldX;
+                    let offsetraange = div.offsetLeft + div.offsetWidth;
+                    if (newX >= 0 && newX <= (elem.clientWidth - div.clientWidth)) {
+                        div.style.left = newX + 'px';
+                    }
+                    console.log(offsetraange)
+                    //   console.log(div.offsetWidth)
+                    if (offsetraange >= 260) {
+                        window.location.href = "photo.html"; // Redirect to another page
+                    }
+                }
+            }
+
+            div.addEventListener('mousedown', start, false);
+            div.addEventListener('touchstart', start, false);
+
+            window.addEventListener('mouseup', end, false);
+            window.addEventListener('touchend', end, false);
+
+            elem.addEventListener('mousemove', move, false);
+            elem.addEventListener('touchmove', move, false);
+        }
+
+        document.addEventListener('DOMContentLoaded', moverclass);
+      
+   
+
+// Get reference to the radio buttons and input field
+const radioButtons = document.querySelectorAll('input[type="radio"][name="selectcategory"]');
+const inputField = document.getElementById('businessCategory');
+
+// Add event listener to each radio button
+radioButtons.forEach(function(radioButton) {
+    radioButton.addEventListener('change', function() {
+        // Check if the radio button is checked
+        if (this.checked) {
+            // Update the value of the input field with the text content of the corresponding <p> tag
+            inputField.value = this.parentElement.previousElementSibling.textContent;
+        }
+    });
+});
+
+
+
+
+    </script>
+</body>
+
+</html>

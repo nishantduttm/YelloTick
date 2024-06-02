@@ -2,6 +2,7 @@ import { getDimensions } from "./StorageUtils";
 import * as Application from "expo-application";
 import { Alert } from "react-native";
 import { Linking } from "react-native";
+import Constants from "expo-constants";
 
 function isEmpty(str) {
     return !str || str.trim().length === 0;
@@ -152,11 +153,11 @@ function roundToOneDigit(num) {
 async function checkExpoAppVersion() {
     try {
         const response = await fetch(
-            "https://raw.githubusercontent.com/nishantduttm/PvalueTrack/main/app/update-changelog.json"
+            "https://raw.githubusercontent.com/nishantduttm/YelloTick/master/update_change_log.json"
         );
         const data = await response.json();
         console.log("GitHub JSON response:", data);
-        const currentVersion = "1.2.33";
+        const currentVersion = Constants.expoConfig.version;
         const githubVersion = data.latestVersion;
         console.log("Current App Version:", currentVersion);
         console.log("GitHub Version:", githubVersion);

@@ -1,4 +1,4 @@
-import { Card, Text, StyleSheet, View, Pressable } from "react-native";
+import { Card, Text, StyleSheet, View, Pressable, Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -9,6 +9,11 @@ import {
     faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
 
+const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height;
+const referenceHeight = 830;
+
+const scaleHeight = screenHeight / referenceHeight;
 
 const dealCardsMapping = {
     dealsClosed: {
@@ -62,7 +67,7 @@ const DealCard = ({ type, score, onClick, idx }) => {
                     <FontAwesomeIcon
                         icon={faEllipsis}
                         color="white"
-                        size={28}
+                        size={28 * scaleHeight}
                     />
                 </View>
             </View>
@@ -81,7 +86,7 @@ const DealCard = ({ type, score, onClick, idx }) => {
                     <FontAwesomeIcon
                         icon={dealCardsMapping[type].icon}
                         color={dealCardsMapping[type].strongColor}
-                        size={16}
+                        size={16 * scaleHeight}
                     />
                 </View>
                 <View
@@ -112,45 +117,45 @@ export default DealCard;
 
 const styles = StyleSheet.create({
     card: {
-        padding: 2,
-        borderRadius: 25,
-        marginHorizontal: 10,
+        padding: 2 * scaleHeight,
+        borderRadius: 25 * scaleHeight,
+        marginHorizontal: 10 * scaleHeight,
         alignSelf: "center",
-        marginTop: 5,
-        paddingVertical: 20,
-        maxWidth:160,
-        maxHeight:160
+        marginTop: 5 * scaleHeight,
+        paddingVertical: 20 * scaleHeight,
+        width: 160 * scaleHeight,
+        height: 160 * scaleHeight,
     },
     headingContainer: {
         flexDirection: "row",
-        marginHorizontal: 10,
-        marginTop: 2,
+        marginHorizontal: 10 * scaleHeight,
+        marginTop: 2 * scaleHeight,
         justifyContent: "space-around",
     },
     heading: {
         fontWeight: "bold",
-        fontSize: 20,
+        fontSize: 16 * scaleHeight,
         color: "white",
     },
     buttonContainer: {
-        paddingHorizontal: 15,
-        paddingVertical: 6,
-        borderRadius: 20,
+        paddingHorizontal: 15 * scaleHeight,
+        paddingVertical: 6 * scaleHeight,
+        borderRadius: 20 * scaleHeight,
     },
     button: {},
     iconContainer: {
         // position: "relative",
         // right: 0,
         opacity: 0.5,
-        marginLeft: 25,
+        marginLeft: 25 * scaleHeight,
     },
     scoreContainer: {
         alignItems: "center",
         justifyContent: "center",
-        marginVertical: 5,
+        marginVertical: 5 * scaleHeight,
     },
     score: {
-        fontSize: 40,
+        fontSize: 40 * scaleHeight,
         fontWeight: "900",
         color: "white",
     },
@@ -158,22 +163,22 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        marginHorizontal: 5,
+        marginHorizontal: 5 * scaleHeight,
         position: "relative",
         bottom: 0,
     },
     iconContainer2: {
         backgroundColor: "white",
-        height: 36,
-        width: 36,
-        borderRadius: 18,
+        height: 36 * scaleHeight,
+        width: 36 * scaleHeight,
+        borderRadius: 18 * scaleHeight,
         alignItems: "center",
         justifyContent: "center",
-        borderWidth: 4,
+        borderWidth: 4 * scaleHeight,
     },
     buttonText: {
         color: "white",
-        fontSize: 18,
+        fontSize: 16 * scaleHeight,
         fontWeight: "900",
     },
 });

@@ -6,9 +6,14 @@ import NextButton from "../NextButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import * as Location from "expo-location";
 import Loader from "../Loader";
+import { showToast } from "../../utils/ToastUtils";
 
 let lat = "0";
 let long = "0";
+
+
+let requiredFields = ["full_name", "business_name", "email", "business_category", "contact_number", "whatsapp_number", "business_location"]
+
 
 const FormStep1 = (props) => {
     const [loadingLocation, setLoadingLocation] = useState(true);
@@ -28,6 +33,17 @@ const FormStep1 = (props) => {
         })();
     }, []);
 
+    const [fieldErrors, setFieldErrors] = useState({
+        full_name: false,
+        business_name: false,
+        email: false,
+        business_category: false,
+        contact_number: false,
+        whatsapp_number: false,
+        business_location: false,
+    });
+
+
     const [formData, setFormData] = useState({
         full_name: "",
         business_name: "",
@@ -43,10 +59,27 @@ const FormStep1 = (props) => {
         setFormData((prevFormData) => {
             return { ...prevFormData, [fieldName]: fieldValue };
         });
+
+        setFieldErrors((prevFieldErrors) => {
+            return { ...prevFieldErrors, [fieldName]: false };
+        });
     };
 
     const onSubmit = () => {
-        props.onSubmit(formData);
+        const updatedFieldErrors = {};
+        Object.entries(formData).forEach(([key, value]) => {
+            if (requiredFields.includes(key) && value.trim() === "") {
+                updatedFieldErrors[key] = true;
+            } else {
+                updatedFieldErrors[key] = false;
+            }
+        });
+        setFieldErrors(updatedFieldErrors);
+        if (!Object.values(updatedFieldErrors).some((error) => error)) {
+            props.onSubmit(formData);
+        }else{
+            showToast("Please fill all required fields")
+        }
     };
 
     return (
@@ -57,16 +90,22 @@ const FormStep1 = (props) => {
                 placeHolder="Full Name"
                 fieldName="full_name"
                 onChange={onChange}
+                required = {true}
+                error = {fieldErrors["full_name"]}
             />
             <FormField
                 placeHolder="Business Name"
                 fieldName="business_name"
                 onChange={onChange}
+                required = {true}
+                error = {fieldErrors["business_name"]}
             />
             <FormField
                 placeHolder="Email Address"
                 fieldName="email"
                 onChange={onChange}
+                required = {true}
+                error = {fieldErrors["email"]}
             />
             <DropDownFormField
                 placeholder="Select category"
@@ -88,6 +127,8 @@ const FormStep1 = (props) => {
                 ]}
                 fieldName="business_category"
                 onChange={onChange}
+                required = {true}
+                error = {fieldErrors["business_category"]}
             />
             <FormField
                 placeHolder="Contact Number"
@@ -95,6 +136,8 @@ const FormStep1 = (props) => {
                 keyboardType="numeric"
                 maxLength={10}
                 onChange={onChange}
+                required = {true}
+                error = {fieldErrors["contact_number"]}
             />
             <FormField
                 placeHolder="Whatsapp Number"
@@ -102,11 +145,15 @@ const FormStep1 = (props) => {
                 keyboardType="numeric"
                 maxLength={10}
                 onChange={onChange}
+                required = {true}
+                error = {fieldErrors["whatsapp_number"]}
             />
             <FormField
                 placeHolder="Business Location"
                 fieldName="business_location"
                 onChange={onChange}
+                required = {true}
+                error = {fieldErrors["business_location"]}
             />
             <NextButton text="Next" onClick={onSubmit} />
         </KeyboardAwareScrollView>

@@ -1,11 +1,13 @@
+import React, { useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import FormField from "../FormFields/FormField";
 import NextButton from "../NextButton";
 import DropDownFormField from "../FormFields/DropDownFormField";
-import { useState } from "react";
 import SelectImageFormField from "../FormFields/SelectImageFormField";
 import PaymentIdFormField from "../FormFields/PaymentIdFormField";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
+const requiredFields = ["payment_id_other_upi"];
 
 const FormStep2 = (props) => {
     const [formData, setFormData] = useState({
@@ -17,14 +19,38 @@ const FormStep2 = (props) => {
         payment_id_ptm_ppay_gpay: "",
         payment_id_other_upi: "",
     });
+
+    const [fieldErrors, setFieldErrors] = useState({
+        payment_id_other_upi: false,
+    });
+
     const onChange = (fieldName, fieldValue) => {
-        setFormData((prevFormData) => {
-            return { ...prevFormData, [fieldName]: fieldValue };
-        });
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [fieldName]: fieldValue,
+        }));
+
+        setFieldErrors((prevFieldErrors) => ({
+            ...prevFieldErrors,
+            [fieldName]: false,
+        }));
     };
 
     const onSubmit = () => {
-        props.onSubmit(formData);
+        const updatedFieldErrors = {};
+        Object.entries(formData).forEach(([key, value]) => {
+            if (requiredFields.includes(key) && value.trim() === "") {
+                updatedFieldErrors[key] = true;
+            } else {
+                updatedFieldErrors[key] = false;
+            }
+        });
+        setFieldErrors(updatedFieldErrors);
+        if (!Object.values(updatedFieldErrors).some((error) => error)) {
+            props.onSubmit(formData);
+        }else{
+            showToast("Please fill all required fields")
+        }
     };
 
     return (
@@ -65,6 +91,8 @@ const FormStep2 = (props) => {
                 placeHolder="Any Other UPI ID"
                 fieldName="payment_id_other_upi"
                 onChange={onChange}
+                required={true}
+                error={fieldErrors["payment_id_other_upi"]}
             />
             <NextButton text="Next" onClick={onSubmit} />
         </KeyboardAwareScrollView>

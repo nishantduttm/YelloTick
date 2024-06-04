@@ -11,7 +11,8 @@ import * as ImagePicker from "expo-image-picker";
 import * as DocumentPicker from "expo-document-picker";
 
 const SelectImageFormField = (props) => {
-    const [imagePlaceHolder, setImagePlaceHolder] = useState(props.placeHolder);
+    let placeHolder = `${props.placeHolder}${props.error ?  (" (This field is required)") : ""}`
+    const [imagePlaceHolder, setImagePlaceHolder] = useState(placeHolder);
     const selectImage = async () => {
         // No permissions request is necessary for launching the image library
         DocumentPicker.getDocumentAsync({
@@ -39,8 +40,9 @@ const SelectImageFormField = (props) => {
                 style={styles.input}
                 placeholder={imagePlaceHolder}
                 editable={false}
+                placeholderTextColor={props.error ? "red" : "black"}
             />
-            <FontAwesomeIcon icon={faStar} style={styles.star} />
+            {props.required && <FontAwesomeIcon icon={faStar} style={styles.star} />}
             <TouchableOpacity style={styles.imageIcon}>
                 <FontAwesomeIcon icon={faImages} style={styles.imageIcon} />
             </TouchableOpacity>

@@ -5,6 +5,7 @@ import { getStartDatAndEndDate, roundToOneDigit } from "../../utils/common-utils
 import { useState, useEffect } from "react";
 import Loader from "../Loader";
 import { getSalesProfile } from "../../utils/ApiUtils";
+import { safeDivisionPercentage } from "../../utils/common-utils";
 
 const WeekScoreItem = ({ text, score, totalScore }) => {
     const buttonBackgroundColor = text === "Today" ? "white" : "black";
@@ -104,7 +105,7 @@ const DealsPendinCard = ({ currentSales, currentPending, target }) => {
                         inActiveStrokeWidth={5}
                         activeStrokeWidth={5}
                     >
-                        <Text>{roundToOneDigit(100 - currentSales / target)} %</Text>
+                        <Text>{roundToOneDigit(100 - safeDivisionPercentage(currentSales, target))} %</Text>
                         <Text>To Close</Text>
                     </CircularProgressBase>
                 </CircularProgressBase>

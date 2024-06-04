@@ -5,6 +5,7 @@ import {
     Image,
     ImageBackground,
     Pressable,
+    Dimensions
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -34,6 +35,7 @@ import {
     getGreeting,
     getStartDatAndEndDate,
     isXHoursBeforeNow,
+    safeDivisionPercentage,
 } from "../utils/common-utils";
 import Loader from "../components/Loader";
 import {
@@ -67,17 +69,23 @@ const MenuOptions = ({ style, onLogout }) => {
     );
 };
 
+const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height;
+const referenceHeight = 840;
+
+const scaleHeight = screenHeight / referenceHeight;
+
 const menuStyle = StyleSheet.create({
     menuContainer: {
-        borderRadius: 20,
+        borderRadius: 20 * scaleHeight,
         backgroundColor: "white",
     },
     itemContainer: {
         flexDirection: "row",
-        borderBottomWidth: 0.2,
+        borderBottomWidth: 0.2 * scaleHeight,
         borderColor: "grey",
-        paddingTop: 25,
-        paddingBottom: 10,
+        paddingTop: 25 * scaleHeight,
+        paddingBottom: 10 * scaleHeight,
         justifyContent: "space-around",
     },
     itemText: {
@@ -155,9 +163,7 @@ const Home = ({
     }, []);
     useEffect(() => {
         SetCurrentPercentageAcheved(
-            Math.round(
-                salesProfile["currentSales"] / salesProfile["currentTarget"]
-            ) * 100
+            safeDivisionPercentage(salesProfile["currentSales"], salesProfile["currentTarget"])
         );
     }, [salesProfile]);
     return (
@@ -206,7 +212,7 @@ const Home = ({
                         <FontAwesomeIcon
                             icon={faPlus}
                             color="#f02e51"
-                            size={30}
+                            size={30 * scaleHeight}
                         />
                     </View>
                 </Pressable>
@@ -278,8 +284,8 @@ const Home = ({
                             <FontAwesomeIcon
                                 icon={faHome}
                                 color="white"
-                                size={30}
-                                style={{ marginTop: 25 }}
+                                size={30 * scaleHeight}
+                                style={{ marginTop: 25 * scaleHeight }}
                             />
                             <NextButton
                                 style={{
@@ -396,7 +402,7 @@ const Home = ({
                         <FontAwesomeIcon
                             icon={faClose}
                             color="white"
-                            size={30}
+                            size={30 * scaleHeight}
                         />
                     </Pressable>
                 </BlurView>
@@ -413,13 +419,13 @@ const styles = StyleSheet.create({
     inputContainer: {
         // flex: 3,
         backgroundColor: "white",
-        borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,
+        borderTopLeftRadius: 40 * scaleHeight,
+        borderTopRightRadius: 40 * scaleHeight,
         textAlign: "center",
         width: "100%",
         height: "100%",
         position: "absolute",
-        top: 180,
+        top: 180 * scaleHeight
         // paddingHorizontal: 20,
     },
     toggleBarIcon: {
@@ -428,114 +434,117 @@ const styles = StyleSheet.create({
     heading: {
         flex: 1,
         flexDirection: "row",
-        marginTop: 10,
+        marginTop: 10 * scaleHeight,
         marginBottom: 0,
-        paddingHorizontal: 20,
+        paddingHorizontal: 20 * scaleHeight,
         justifyContent: "space-between",
-        marginLeft: 10,
+        marginLeft: 10 * scaleHeight,
     },
     textContainer: {
-        marginTop: 5,
+        marginTop: 5 * scaleHeight,
     },
     text: {
         color: "white",
         fontWeight: "bold",
-        fontSize: 20,
+        fontSize: 20 * scaleHeight,
     },
     toggleIconDiv: {
         elevation: 4,
         backgroundColor: "#e81e43",
-        padding: 2,
+        padding: 2 * scaleHeight,
         overflow: "hidden",
-        borderRadius: 100,
+        borderRadius: 100 * scaleHeight,
         shadowOffset: { height: 0, width: 1 },
         shadowOpacity: 0.8,
-        height: 55,
-        width: 55,
+        height: 45 * scaleHeight,
+        width: 45 * scaleHeight,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 20,
+        marginTop: 20 * scaleHeight,
     },
     bellIconDiv: {
         elevation: 4,
         backgroundColor: "white",
-        padding: 8,
+        padding: 8 * scaleHeight,
         overflow: "hidden",
-        borderRadius: 27,
+        borderRadius: 27 * scaleHeight,
         shadowOffset: { height: 0, width: 1 },
         shadowOpacity: 0.8,
         shadowRadius: 1,
         shadowColor: "black",
         justifyContent: "center",
         alignItems: "center",
-        height: 55,
-        width: 55,
+        height: 45 * scaleHeight,
+        width: 45 * scaleHeight,
     },
     iconContainer: {
         position: "absolute",
-        right: 10,
-        marginTop: 20,
-        marginRight: 10,
+        right: 10 * scaleHeight,
+        marginTop: 20 * scaleHeight,
+        marginRight: 10 * scaleHeight,
     },
-    icon: {},
+    icon: {
+        height:25 * scaleHeight,
+        width: 25 * scaleHeight
+    },
     avatarContainer: {
         position: "absolute",
-        top: 50,
+        top: 50 * scaleHeight,
     },
     greeting: {
         position: "absolute",
-        top: 110,
+        top: 110 * scaleHeight,
         alignItems: "center",
         justifyContent: "center",
         flex: 1,
         width: "100%",
-        marginLeft: 20,
+        marginLeft: 20 * scaleHeight,
     },
     goodMorningText: {
         color: "white",
-        fontSize: 20,
+        fontSize: 20 * scaleHeight,
     },
     name: {
         color: "white",
-        fontSize: 20,
+        fontSize: 20 * scaleHeight,
         fontWeight: "bold",
     },
     addButtonContainer: {
         flexDirection: "row",
-        marginTop: 40,
+        marginTop: 40 * scaleHeight,
         justifyContent: "flex-end",
-        marginRight: 20,
-        borderRadius: 14,
+        marginRight: 20 * scaleHeight,
+        borderRadius: 14 * scaleHeight,
     },
     plusIcon: {
-        borderRadius: 28,
+        borderRadius: 28 * scaleHeight,
         elevation: 20,
-        padding: 10,
+        padding: 10 * scaleHeight,
         backgroundColor: "white",
     },
     container1: {
         backgroundColor: "#F1F1F1",
-        margin: 20,
-        borderRadius: 20,
-        paddingVertical: 20,
+        margin: 10 * scaleHeight,
+        borderRadius: 10 * scaleHeight,
+        paddingVertical: 10 * scaleHeight,
     },
     targetContainer: {
         justifyContent: "center",
         alignItems: "center",
-        marginVertical: 10,
+        marginVertical: 10 * scaleHeight,
     },
     dealsContainer: {},
-    dealsRow1: { flexDirection: "row", marginTop: 10 },
-    dealsRow2: { flexDirection: "row", marginTop: 10, marginBottom: 10 },
+    dealsRow1: { flexDirection: "row", marginTop: 10 * scaleHeight, justifyContent:"center" },
+    dealsRow2: { flexDirection: "row", marginTop: 10 * scaleHeight, marginBottom: 10 * scaleHeight, justifyContent:"center" },
     percentageText: {
-        fontSize: 40,
+        fontSize: 40 * scaleHeight,
         color: "#f02e51",
         fontWeight: "bold",
     },
     targetAcheivedText: {
         color: "#f02e51",
-        fontSize: 14,
-        marginLeft: 10,
+        fontSize: 14 * scaleHeight,
+        marginLeft: 10 * scaleHeight,
         fontWeight: "bold",
     },
     percentageContainer: {
@@ -545,21 +554,21 @@ const styles = StyleSheet.create({
     },
     remainingTargetText: {
         color: "grey",
-        marginBottom: 10,
+        marginBottom: 10 * scaleHeight,
     },
     menuItem: {
         position: "absolute",
-        top: 170,
-        right: 20,
-        elevation: 10,
+        top: 170 * scaleHeight,
+        right: 20 * scaleHeight,
+        elevation: 10 * scaleHeight,
     },
     bottomCard: {
         backgroundColor: "black",
-        borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,
+        borderTopLeftRadius: 40 * scaleHeight,
+        borderTopRightRadius: 40 * scaleHeight,
         position: "absolute",
         bottom: 0,
-        top: 600,
+        top: 600 * scaleHeight,
         width: "100%",
         justifyContent: "center",
     },
@@ -569,7 +578,7 @@ const styles = StyleSheet.create({
         width: "100%",
         flexDirection: "row",
         alignItems: "center",
-        marginHorizontal: 30,
+        marginHorizontal: 30 * scaleHeight,
         justifyContent: "space-around",
     },
     menuCard: {
@@ -582,20 +591,22 @@ const styles = StyleSheet.create({
         zIndex: 3,
         justifyContent: "center",
         alignItems: "center",
-        elevation: 5,
+        elevation: 5 * scaleHeight,
         borderColor: "black",
-        borderWidth: 4,
+        borderWidth: 4 * scaleHeight,
     },
     navigationContainer: {
         position: "absolute",
-        top: 150,
+        top: 150 * scaleHeight,
         width: "100%",
     },
     closeItemContainer: {
         position: "absolute",
-        top: 20,
-        right: 10,
+        top: 20 * scaleHeight,
+        right: 10 * scaleHeight,
     },
+    avatar:{
+    }
 });
 
 export default Home;

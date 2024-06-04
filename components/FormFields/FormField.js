@@ -1,22 +1,28 @@
 import React from "react";
-import { View, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TextInput, TouchableOpacity, StyleSheet, Text } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faStar, faImages } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 const FormField = (props) => {
+    const handleTextChange = (text) => {
+        props.onChange(props.fieldName, text);
+    };
+
+    let placeHolder = `${props.placeHolder}${props.error ?  (" (This field is required)") : ""}`
     return (
         <View style={styles.inputContainer1}>
+            <View style={styles.input}>
             <TextInput
-                style={styles.input}
-                placeholder={props.placeHolder}
+                placeholder={placeHolder}
+                placeholderTextColor={props.error ? "red" : "black"}
                 keyboardType={props.keyboardType}
                 maxLength={props.maxLength}
-                onChangeText={(text) => {props.onChange(props.fieldName, text)}}
+                onChangeText={handleTextChange}
+                value={props.value}
             />
-            <FontAwesomeIcon icon={faStar} style={styles.star} />
-            <TouchableOpacity onPress={props.onPress} style={styles.imageIcon}>
-                <FontAwesomeIcon icon={faImages} style={styles.imageIcon} />
-            </TouchableOpacity>
+            </View>
+            {props.required && <FontAwesomeIcon icon={faStar} style={styles.star} />}
         </View>
     );
 };

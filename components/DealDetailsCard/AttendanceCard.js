@@ -108,11 +108,11 @@ const AttendenceCard = () => {
                     customDatesStyles={customDatesStyles}
                 />
             </View>
-            <View style={styles.buttonContainer}>
+            {/* <View style={styles.buttonContainer}>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Select Date</Text>
                 </Pressable>
-            </View>
+            </View> */}
         </View>
     );
 };

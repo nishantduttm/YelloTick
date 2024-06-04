@@ -66,7 +66,7 @@ const AddMerchantScreen = ({
     };
 
     useEffect(() => {
-        if (step === 7) {
+        if (step === 6) {
             setMerchantAdded(false);
             addMerchant(
                 merchantData,
@@ -85,7 +85,7 @@ const AddMerchantScreen = ({
 
     return (
         <>
-            {step < 6 && (
+            {step < 5 && (
                 <View style={styles.screen}>
                     <Image
                         style={styles.imageContainer}
@@ -95,27 +95,27 @@ const AddMerchantScreen = ({
                         <MultiStepper step={step} />
                     </View>
                     <View style={styles.inputContainer}>
-                        {step == 1 && (
+                        {/* {step == 1 && (
                             <QRIdVerificationScreen
                                 onSubmit={onSubmit.bind(this, 2)}
                             />
+                        )} */}
+                        {step == 1 && (
+                            <FormStep1 onSubmit={onSubmit.bind(this, 2)} />
                         )}
                         {step == 2 && (
-                            <FormStep1 onSubmit={onSubmit.bind(this, 3)} />
+                            <FormStep2 onSubmit={onSubmit.bind(this, 3)} />
                         )}
                         {step == 3 && (
-                            <FormStep2 onSubmit={onSubmit.bind(this, 4)} />
+                            <FormStep3 onSubmit={onSubmit.bind(this, 4)} />
                         )}
                         {step == 4 && (
-                            <FormStep3 onSubmit={onSubmit.bind(this, 5)} />
-                        )}
-                        {step == 5 && (
-                            <FormStep4 onSubmit={onSubmit.bind(this, 6.1)} />
+                            <FormStep4 onSubmit={onSubmit.bind(this, 5.1)} />
                         )}
                     </View>
                 </View>
             )}
-            {parseInt(step) == 6 && (
+            {parseInt(step) == 5 && (
                 <AddMerchantScreen2
                     onNotificationClicked={onNotificationClicked}
                     onLogout={onLogout}
@@ -123,7 +123,7 @@ const AddMerchantScreen = ({
                     <View style={styles.stepContainer}>
                         <MultiStepper step={5} />
                     </View>
-                    {step === 6.1 && (
+                    {step === 5.1 && (
                         <>
                             <SubscriptionOptions
                                 onSubScriptionSelected={(subscriptionName) =>
@@ -134,24 +134,24 @@ const AddMerchantScreen = ({
                                 color="black"
                                 title="Collect Payment"
                                 onClick={() => {
-                                    onSubmit(6.2, {
+                                    onSubmit(5.2, {
                                         membership_type: subscriptionSelected,
                                     });
                                 }}
                             />
                         </>
                     )}
-                    {step == 6.2 && (
-                        <PaymentScreen onSubmit={onSubmit.bind(this, 6.3)} />
+                    {step == 5.2 && (
+                        <PaymentScreen onSubmit={onSubmit.bind(this, 5.3)} />
                     )}
-                    {step == 6.3 && (
-                        <TransactionIdVerificationScreen
-                            onSubmit={onSubmit.bind(this, 7)}
-                        />
+                    {step == 5.3 && (
+                        <QRIdVerificationScreen
+                                onSubmit={onSubmit.bind(this, 6)}
+                            />
                     )}
                 </AddMerchantScreen2>
             )}
-            {step == 7 && (
+            {step == 6 && (
                 <ConfirmationScreen
                     merchantAdded={merchantAdded}
                     onHomeClicked={onHomeClicked}

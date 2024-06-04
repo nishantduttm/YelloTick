@@ -5,6 +5,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 
 const DropDownFormField = (props) => {
     const [value, setValue] = useState("");
+    let placeHolder = `${props.placeholder}${props.error ?  (" (This field is required)") : ""}`
     const renderItem = (item) => {
         return (
             <View style={styles.item}>
@@ -20,11 +21,12 @@ const DropDownFormField = (props) => {
             </View>
         );
     };
+    
 
     return (
         <View style={styles.dropdown}>
             <Dropdown
-                placeholderStyle={styles.placeholderStyle}
+                placeholderStyle={[styles.placeholderStyle, {color: props.error ? "red" : "black"}]}
                 selectedTextStyle={styles.selectedTextStyle}
                 inputSearchStyle={styles.inputSearchStyle}
                 iconStyle={styles.iconStyle}
@@ -33,7 +35,7 @@ const DropDownFormField = (props) => {
                 maxHeight={300}
                 labelField="label"
                 valueField="value"
-                placeholder={props.placeholder}
+                placeholder={placeHolder}
                 searchPlaceholder="Search..."
                 value={value}
                 onChange={(item) => {

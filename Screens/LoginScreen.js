@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
     View,
     Text,
@@ -5,16 +6,16 @@ import {
     TextInput,
     StyleSheet,
     TouchableOpacity,
+    Dimensions,
 } from "react-native";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { useState } from "react";
-import NextButton from "../components/NextButton";
-import OtpCard from "../components/LoginComponents/OtpCard";
 import { BlurView } from "expo-blur";
 import { login } from "../utils/ApiUtils";
 import { showToast } from "../utils/ToastUtils";
 import Loader from "../components/Loader";
+import NextButton from "../components/NextButton";
+import OtpCard from "../components/LoginComponents/OtpCard";
 import { scaleDimension } from "../utils/common-utils";
 
 const generatedOtp = "1234";
@@ -25,17 +26,17 @@ const LoginScreen = ({ onSuccess, loginInProgressProp }) => {
         username: "",
         password: "",
     });
+    const [showPassword, setShowPassword] = useState(false);
+
     const onChange = (fieldName, value) => {
-        setCredentials((prevState) => {
-            return { ...prevState, [fieldName]: value };
-        });
+        setCredentials((prevState) => ({ ...prevState, [fieldName]: value }));
     };
 
     const loginHandler = () => {
         setLoginInProgress(true);
         login(
-            credentials["username"],
-            credentials["password"],
+            credentials.username,
+            credentials.password,
             (data) => {
                 setLoginInProgress(false);
                 onSuccess();
@@ -47,16 +48,10 @@ const LoginScreen = ({ onSuccess, loginInProgressProp }) => {
         );
     };
 
-    // const onSubmitOtpHandler = (enteredOtp) => {
-    //     if (enteredOtp === generatedOtp) {
-    //         onSuccess();
-    //     }
-    // };
-
-    const [showPassword, setShowPassoword] = useState(false);
     const togglePasswordVisibility = () => {
-        setShowPassoword((prevState) => !prevState);
+        setShowPassword((prevState) => !prevState);
     };
+
     return (
         <View style={styles.rootContainer}>
             <View style={styles.imageContainer}>
@@ -66,8 +61,8 @@ const LoginScreen = ({ onSuccess, loginInProgressProp }) => {
                 <TextInput
                     style={styles.input}
                     placeholder="Enter Employee Id"
-                    value={credentials["username"]}
-                    onChangeText={onChange.bind(this, "username")}
+                    value={credentials.username}
+                    onChangeText={(value) => onChange("username", value)}
                 />
                 <View style={styles.labelContainer}>
                     <Text style={styles.labels}>Forgot your Id?</Text>
@@ -77,7 +72,7 @@ const LoginScreen = ({ onSuccess, loginInProgressProp }) => {
                         placeholder="Enter Password"
                         secureTextEntry={!showPassword}
                         style={styles.passwordInput}
-                        onChangeText={onChange.bind(this, "password")}
+                        onChangeText={(value) => onChange("password", value)}
                     />
                     <TouchableOpacity
                         style={styles.icon}
@@ -104,60 +99,62 @@ const LoginScreen = ({ onSuccess, loginInProgressProp }) => {
 
 export default LoginScreen;
 
+const { width, height } = Dimensions.get("window");
+
 const styles = StyleSheet.create({
     rootContainer: {
         flex: 1,
         backgroundColor: "white",
     },
     imageContainer: {
-        margin: 10,
-        marginTop: 40,
+        margin: scaleDimension(10), // Utilize scaleDimension for responsive scaling
+        marginTop: scaleDimension(40),
         alignItems: "center",
     },
     inputContainer: {
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 60,
+        marginTop: scaleDimension(60),
         width: "100%",
     },
     input: {
         borderColor: "#ffbe00",
         borderWidth: 2,
         width: "70%",
-        padding: 10,
-        borderRadius: 24,
-        paddingLeft: 20,
-        fontSize: 20,
-        marginTop: 40,
+        padding: scaleDimension(10),
+        borderRadius: scaleDimension(24),
+        paddingLeft: scaleDimension(20),
+        fontSize: scaleDimension(20),
+        marginTop: scaleDimension(40),
         flexDirection: "row",
         alignItems: "center",
     },
     icon: {
         position: "absolute",
-        right: 30,
+        right: scaleDimension(30),
     },
     passwordInput: {
-        fontSize: 20,
+        fontSize: scaleDimension(20),
     },
     labels: {
         position: "absolute",
-        right: 10,
-        fontSize: 15,
+        right: scaleDimension(10),
+        fontSize: scaleDimension(15),
     },
     bottomCard: {
         backgroundColor: "black",
         flex: 1,
-        borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,
+        borderTopLeftRadius: scaleDimension(40),
+        borderTopRightRadius: scaleDimension(40),
         position: "absolute",
-        top: 600,
-        height: 360,
+        top: height * 0.75, // Adjust position based on screen height
+        height: height * 0.275, // Adjust height based on screen height
         width: "100%",
         justifyContent: "center",
     },
     labelContainer: {
         width: "70%",
-        marginVertical: 10,
+        marginVertical: scaleDimension(10),
     },
     otpCard: {
         flex: 1,
@@ -168,7 +165,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         justifyContent: "center",
         alignItems: "center",
-        elevation: 8,
-        borderWidth: 4,
+        elevation: scaleDimension(8),
+        borderWidth: scaleDimension(4),
     },
 });

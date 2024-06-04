@@ -203,6 +203,16 @@ function compareVersions(version1, version2) {
     return 0;
 }
 
+function safeDivisionPercentage(numerator, denominator) {
+  // Check for division by zero or undefined values
+  if (denominator === 0 || isNaN(numerator) || isNaN(denominator)) {
+    return 0;
+  } else {
+    // Calculate and round percentage
+    return (numerator / denominator * 100).toFixed(2);
+  }
+}
+
 export {
     isEmpty,
     getStartDatAndEndDate,
@@ -215,4 +225,5 @@ export {
     getTodayStartAndEndDate,
     roundToOneDigit,
     checkExpoAppVersion,
+    safeDivisionPercentage
 };

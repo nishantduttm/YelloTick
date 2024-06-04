@@ -1,10 +1,13 @@
+import React, { useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import FormField from "../FormFields/FormField";
 import NextButton from "../NextButton";
-import { useState } from "react";
 import SelectImageFormField from "../FormFields/SelectImageFormField";
 import DropDownFormField from "../FormFields/DropDownFormField";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { showToast } from "../../utils/ToastUtils";
+
+const requiredFields = ["shop_images"];
 
 const FormStep3 = (props) => {
     const [formData, setFormData] = useState({
@@ -16,14 +19,38 @@ const FormStep3 = (props) => {
         msme_certificate: "",
         gst_certificate: "",
     });
+
+    const [fieldErrors, setFieldErrors] = useState({
+        shop_images: false,
+    });
+
     const onChange = (fieldName, fieldValue) => {
-        setFormData((prevFormData) => {
-            return { ...prevFormData, [fieldName]: fieldValue };
-        });
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [fieldName]: fieldValue,
+        }));
+
+        setFieldErrors((prevFieldErrors) => ({
+            ...prevFieldErrors,
+            [fieldName]: false,
+        }));
     };
 
     const onSubmit = () => {
-        props.onSubmit(formData);
+        const updatedFieldErrors = {};
+        Object.entries(formData).forEach(([key, value]) => {
+            if (requiredFields.includes(key) && value === "") {
+                updatedFieldErrors[key] = true;
+            } else {
+                updatedFieldErrors[key] = false;
+            }
+        });
+        setFieldErrors(updatedFieldErrors);
+        if (!Object.values(updatedFieldErrors).some((error) => error)) {
+            props.onSubmit(formData);
+        } else {
+            showToast("Please fill all required fields");
+        }
     };
 
     return (
@@ -36,18 +63,12 @@ const FormStep3 = (props) => {
                 keyboardType="numeric"
             />
             <DropDownFormField
-                placeholder="Turover Yearly"
+                placeholder="Turnover Yearly"
                 data={[
                     { label: "Below 20 Lacs", value: "Below 20 Lacs" },
-                    {
-                        label: "Below 5 Cr",
-                        value: "Below 5 Cr",
-                    },
+                    { label: "Below 5 Cr", value: "Below 5 Cr" },
                     { label: "Below 10 Cr", value: "Below 10 Cr" },
-                    {
-                        label: "Below 50 Cr",
-                        value: "Below 50 Cr",
-                    },
+                    { label: "Below 50 Cr", value: "Below 50 Cr" },
                 ]}
                 fieldName="turnover_yearly"
                 onChange={onChange}
@@ -56,6 +77,8 @@ const FormStep3 = (props) => {
                 placeHolder="Upload Images of Shop"
                 fieldName="shop_images"
                 onChange={onChange}
+                required={true}
+                error={fieldErrors["shop_images"]}
             />
             <SelectImageFormField
                 placeHolder="Upload Rental Agreement"

@@ -146,8 +146,13 @@ const AddMerchantScreen = ({
                     )}
                     {step == 5.3 && (
                         <QRIdVerificationScreen
-                                onSubmit={onSubmit.bind(this, 6)}
-                            />
+                            onSubmit={onSubmit.bind(this, 5.4)}
+                        />
+                    )}
+                    {step == 5.4 && (
+                        <TransactionIdVerificationScreen
+                            onSubmit={onSubmit.bind(this, 6)}
+                        />
                     )}
                 </AddMerchantScreen2>
             )}

@@ -65,7 +65,7 @@ const LoginScreen = ({ onSuccess, loginInProgressProp }) => {
                     onChangeText={(value) => onChange("username", value)}
                 />
                 <View style={styles.labelContainer}>
-                    <Text style={styles.labels}>Forgot your Id?</Text>
+                    <Text style={styles.labels}>Forgot Username?</Text>
                 </View>
                 <View style={styles.input}>
                     <TextInput

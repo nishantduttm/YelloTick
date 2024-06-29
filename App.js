@@ -25,7 +25,7 @@ export default function App() {
 
     useEffect(() => {
         checkExpoAppVersion();
-    }, []); // Empty dependency array ensures this runs only once on app load
+    }, []); 
 
     const [screenIndex, setScreenIndex] = useState(0);
     const [fontsLoaded] = useFonts({

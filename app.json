@@ -65,7 +65,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/yellotickmainlogo.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
       "usesCleartextTraffic": true,

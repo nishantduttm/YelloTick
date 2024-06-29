@@ -22,6 +22,7 @@ const FormStep3 = (props) => {
 
     const [fieldErrors, setFieldErrors] = useState({
         shop_images: false,
+        msme_certificate: false,
     });
 
     const onChange = (fieldName, fieldValue) => {
@@ -79,6 +80,7 @@ const FormStep3 = (props) => {
                 onChange={onChange}
                 required={true}
                 error={fieldErrors["shop_images"]}
+                multi={true}
             />
             <SelectImageFormField
                 placeHolder="Upload Rental Agreement"
@@ -94,6 +96,8 @@ const FormStep3 = (props) => {
                 placeHolder="Upload MSME Certificate"
                 fieldName="msme_certificate"
                 onChange={onChange}
+                required={true}
+                error={fieldErrors["msme_certificate"]}
             />
             <SelectImageFormField
                 placeHolder="Upload GST Certificate"

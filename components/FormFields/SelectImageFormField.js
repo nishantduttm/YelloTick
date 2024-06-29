@@ -11,22 +11,36 @@ import * as ImagePicker from "expo-image-picker";
 import * as DocumentPicker from "expo-document-picker";
 
 const SelectImageFormField = (props) => {
-    let placeHolder = `${props.placeHolder}${props.error ?  (" (This field is required)") : ""}`
+    let placeHolder = `${props.placeHolder}${
+        props.error ? " (This field is required)" : ""
+    }`;
     const [imagePlaceHolder, setImagePlaceHolder] = useState(placeHolder);
     const selectImage = async () => {
         // No permissions request is necessary for launching the image library
-        DocumentPicker.getDocumentAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+        ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsMultipleSelection: props.multi ? true : false,
         })
             .then((result) => {
                 if (!result.canceled) {
-                    // console.log(result);
-                    props.onChange(props.fieldName, {
-                        uri: result.assets[0].uri,
-                        name: result.assets[0].name,
-                        type: result.assets[0].mimeType,
-                    });
-                    setImagePlaceHolder(result.assets[0].name);
+                    console.log(result);
+                    if (!props.multi) {
+                        props.onChange(props.fieldName, {
+                            uri: result.assets[0].uri,
+                            name: result.assets[0].fileName,
+                            type: result.assets[0].mimeType,
+                        });
+                    } else {
+                        props.onChange(
+                            props.fieldName,
+                            result.assets.map((asset) => ({
+                                uri: asset.uri,
+                                name: asset.fileName,
+                                type: asset.mimeType,
+                            }))
+                        );
+                    }
+                    setImagePlaceHolder(result.assets[0].fileName);
                 }
             })
             .catch((error) => {
@@ -42,7 +56,9 @@ const SelectImageFormField = (props) => {
                 editable={false}
                 placeholderTextColor={props.error ? "red" : "black"}
             />
-            {props.required && <FontAwesomeIcon icon={faStar} style={styles.star} />}
+            {props.required && (
+                <FontAwesomeIcon icon={faStar} style={styles.star} />
+            )}
             <TouchableOpacity style={styles.imageIcon}>
                 <FontAwesomeIcon icon={faImages} style={styles.imageIcon} />
             </TouchableOpacity>

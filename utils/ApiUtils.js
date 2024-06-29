@@ -152,9 +152,16 @@ const addMerchant = async (merchantData, onSuccess, onFailure) => {
     };
     const formdata = new FormData();
 
-    Object.keys(merchantData).forEach((key) => {
-        formdata.append(key, merchantData[key]);
+    Object.entries(merchantData).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+            value.forEach((item) => {
+                formdata.append(key, item);
+            });
+        } else {
+            formdata.append(key, value);
+        }
     });
+
     callApi(url, method, headers, formdata, onSuccess, onFailure);
 };
 

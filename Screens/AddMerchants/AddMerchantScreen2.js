@@ -12,7 +12,7 @@ const MenuOptions = ({ style, onLogout }) => {
                 <Text style={menuStyle.itemText}>Share Report</Text>
                 <FontAwesomeIcon
                     icon={faShareNodes}
-                    color="#f02e51"
+                    color="#CA1F3F"
                     size={25}
                 />
             </View>
@@ -23,7 +23,7 @@ const MenuOptions = ({ style, onLogout }) => {
                 }}
             >
                 <Text style={menuStyle.itemText}>Logout</Text>
-                <FontAwesomeIcon icon={faPowerOff} color="#f02e51" size={25} />
+                <FontAwesomeIcon icon={faPowerOff} color="#CA1F3F" size={25} />
             </Pressable>
             <Image source={require("../../assets/bottomimgeline.png")} />
         </View>
@@ -44,7 +44,7 @@ const menuStyle = StyleSheet.create({
         justifyContent: "space-around",
     },
     itemText: {
-        color: "#f02e51",
+        color: "#CA1F3F",
         fontWeight: "bold",
     },
 });
@@ -53,7 +53,7 @@ const AddMerchantScreen2 = (props) => {
     const [isMenuOpened, setIsMenuOpened] = useState(false);
     return (
         <LinearGradient
-            colors={["#f02e51", "#98001C"]}
+            colors={["#CA1F3F", "#98010C"]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.rootContainer}
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     rootContainer: {
         flex: 1,
         width: "100%",
+        paddingTop: 30,
     },
     inputContainer: {
         flex: 1,

@@ -93,15 +93,16 @@ const getGreeting = () => {
 };
 
 const scaleDimension = (value, isVertical) => {
+    console.log(value);
     getDimensions().then((dimension) => {
         if (isVertical) {
-            let res = (value / 866) * dimension["height"];
+            let res = (value / 800) * (dimension["height"] - 300);
             console.log(
                 "res " + value + " : " + res + " : " + dimension["height"]
             );
             return res;
         } else {
-            return (value / 412) * dimension["width"];
+            return (value / 412) * (dimension["width"] - 300);
         }
     });
     return value;

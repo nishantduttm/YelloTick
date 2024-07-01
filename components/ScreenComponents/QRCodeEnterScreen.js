@@ -16,15 +16,26 @@ const QRIdVerificationScreen = (props) => {
         props.onSubmit({ qrId: qrId });
     };
 
-    const onChange = (fieldName, enteredQRId) => {
-        setQRId(enteredQRId);
+    const onChange = (fieldName, value) => {
+        value = value.replace(/[^a-zA-Z0-9-]/g, "");
+        if (value.length > 13) {
+            value = value.substring(0, 13);
+        }
+        if (value.length >= 3 && value[2] !== "-") {
+            value = value.substring(0, 2) + "-" + value.substring(2);
+        }
+        if (value.length >= 9 && value[8] !== "-") {
+            value = value.substring(0, 8) + "-" + value.substring(8);
+        }
+        setQRId(value);
     };
+
 
     const onClickHandler = () => {};
     return (
         <View style={styles.container}>
             <View style={styles.inputContainer}>
-                <FormField placeHolder="Enter QR Id" onChange={onChange} />
+                <FormField placeHolder="Enter QR Id" onChange={onChange} value={qrId}/>
             </View>
             <View style={styles.buttonContainer}>
                 <NextButton onClick={onNextHandler} />

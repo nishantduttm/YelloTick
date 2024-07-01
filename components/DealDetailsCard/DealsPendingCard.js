@@ -1,7 +1,10 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { CircularProgressBase } from "react-native-circular-progress-indicator";
-import { getStartDatAndEndDate, roundToOneDigit } from "../../utils/common-utils";
+import {
+    getStartDatAndEndDate,
+    roundToOneDigit,
+} from "../../utils/common-utils";
 import { useState, useEffect } from "react";
 import Loader from "../Loader";
 import { getSalesProfile } from "../../utils/ApiUtils";
@@ -105,7 +108,13 @@ const DealsPendinCard = ({ currentSales, currentPending, target }) => {
                         inActiveStrokeWidth={5}
                         activeStrokeWidth={5}
                     >
-                        <Text>{roundToOneDigit(100 - safeDivisionPercentage(currentSales, target))} %</Text>
+                        <Text>
+                            {roundToOneDigit(
+                                100 -
+                                    safeDivisionPercentage(currentSales, target)
+                            )}{" "}
+                            %
+                        </Text>
                         <Text>To Close</Text>
                     </CircularProgressBase>
                 </CircularProgressBase>
@@ -131,11 +140,11 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     title: {
-        color: "#f02e51",
+        color: "#CA1F3F",
         fontSize: 40,
         fontWeight: "bold",
         textShadowRadius: 2,
-        textShadowColor: "#f02e51",
+        textShadowColor: "#CA1F3F",
         letterSpacing: 1,
     },
     scoreConrtainer: {

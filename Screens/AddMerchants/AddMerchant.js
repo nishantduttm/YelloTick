@@ -1,5 +1,5 @@
 import MultiStepper from "../../components/MultiStepper";
-import { View, Image, StyleSheet, ScrollView } from "react-native";
+import { View, Image, StyleSheet, ScrollView, Dimensions } from "react-native";
 import NextButton from "../../components/NextButton";
 import FormStep1 from "../../components/Form/FormStep1";
 import FormStep2 from "../../components/Form/FormStep2";
@@ -15,6 +15,13 @@ import { addMerchant } from "../../utils/ApiUtils";
 import { showToast } from "../../utils/ToastUtils";
 import { BackHandler } from "react-native";
 import QRIdVerificationScreen from "../../components/ScreenComponents/QRCodeEnterScreen";
+import SelfieScreen from "../../components/Form/SelfieScreen";
+
+const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height;
+const referenceHeight = 840;
+
+const scaleHeight = screenHeight / referenceHeight;
 
 const AddMerchantScreen = ({
     onHomeClicked,
@@ -50,23 +57,20 @@ const AddMerchantScreen = ({
         setStep(step);
     };
 
-    const handleBackButton = () => {
-        if (step == 1) {
+    const handleBackButton = async () => {
+        if (step === 1) {
             onHomeClicked();
             return true;
         }
         setStep((prev) => {
-            if (parseInt(prev) == prev) {
-                return prev - 1;
-            } else {
-                return prev - 0.1;
-            }
+            return prev - 1;
         });
+
         return true;
     };
 
     useEffect(() => {
-        if (step === 6) {
+        if (step === 10) {
             setMerchantAdded(false);
             addMerchant(
                 merchantData,
@@ -76,7 +80,7 @@ const AddMerchantScreen = ({
                 },
                 () => {
                     showToast("Failed to add merchant");
-                    setStep(5.3);
+                    setStep(8);
                 }
             );
             BackHandler.addEventListener("hardwareBackPress", handleBackButton);
@@ -85,7 +89,7 @@ const AddMerchantScreen = ({
 
     return (
         <>
-            {step < 5 && (
+            {step < 6 && (
                 <View style={styles.screen}>
                     <Image
                         style={styles.imageContainer}
@@ -95,27 +99,25 @@ const AddMerchantScreen = ({
                         <MultiStepper step={step} />
                     </View>
                     <View style={styles.inputContainer}>
-                        {/* {step == 1 && (
-                            <QRIdVerificationScreen
-                                onSubmit={onSubmit.bind(this, 2)}
-                            />
-                        )} */}
                         {step == 1 && (
-                            <FormStep1 onSubmit={onSubmit.bind(this, 2)} />
+                            <SelfieScreen onSubmit={onSubmit.bind(this, 2)} />
                         )}
                         {step == 2 && (
-                            <FormStep2 onSubmit={onSubmit.bind(this, 3)} />
+                            <FormStep1 onSubmit={onSubmit.bind(this, 3)} />
                         )}
                         {step == 3 && (
-                            <FormStep3 onSubmit={onSubmit.bind(this, 4)} />
+                            <FormStep2 onSubmit={onSubmit.bind(this, 4)} />
                         )}
                         {step == 4 && (
-                            <FormStep4 onSubmit={onSubmit.bind(this, 5.1)} />
+                            <FormStep3 onSubmit={onSubmit.bind(this, 5)} />
+                        )}
+                        {step == 5 && (
+                            <FormStep4 onSubmit={onSubmit.bind(this, 6)} />
                         )}
                     </View>
                 </View>
             )}
-            {parseInt(step) == 5 && (
+            {step >= 6 && step < 10 && (
                 <AddMerchantScreen2
                     onNotificationClicked={onNotificationClicked}
                     onLogout={onLogout}
@@ -123,7 +125,7 @@ const AddMerchantScreen = ({
                     <View style={styles.stepContainer}>
                         <MultiStepper step={5} />
                     </View>
-                    {step === 5.1 && (
+                    {step === 6 && (
                         <>
                             <SubscriptionOptions
                                 onSubScriptionSelected={(subscriptionName) =>
@@ -134,29 +136,29 @@ const AddMerchantScreen = ({
                                 color="black"
                                 title="Collect Payment"
                                 onClick={() => {
-                                    onSubmit(5.2, {
+                                    onSubmit(7, {
                                         membership_type: subscriptionSelected,
                                     });
                                 }}
                             />
                         </>
                     )}
-                    {step == 5.2 && (
-                        <PaymentScreen onSubmit={onSubmit.bind(this, 5.3)} />
+                    {step == 7 && (
+                        <PaymentScreen onSubmit={onSubmit.bind(this, 8)} />
                     )}
-                    {step == 5.3 && (
+                    {step == 8 && (
                         <QRIdVerificationScreen
-                            onSubmit={onSubmit.bind(this, 5.4)}
+                            onSubmit={onSubmit.bind(this, 9)}
                         />
                     )}
-                    {step == 5.4 && (
+                    {step == 9 && (
                         <TransactionIdVerificationScreen
-                            onSubmit={onSubmit.bind(this, 6)}
+                            onSubmit={onSubmit.bind(this, 10)}
                         />
                     )}
                 </AddMerchantScreen2>
             )}
-            {step == 6 && (
+            {step == 10 && (
                 <ConfirmationScreen
                     merchantAdded={merchantAdded}
                     onHomeClicked={onHomeClicked}
@@ -182,7 +184,7 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
         height: "100%",
-        marginTop: 5,
+        marginTop: scaleHeight * 5,
     },
     inputContainer: {
         flex: 1,
@@ -192,21 +194,22 @@ const styles = StyleSheet.create({
         // position: "relative",
         width: "100%",
         // top: 40,
-        padding: 10,
-        paddingHorizontal: 20,
+        padding: scaleHeight * 10,
+        paddingHorizontal: scaleHeight * 20,
     },
     imageContainer: {
-        height: 50,
+        height: scaleHeight * 50,
         width: 300,
-        margin: 5,
-        marginTop: 4,
-        padding: 10,
+        // margin: 5,
+        marginTop: scaleHeight * 60,
+        // padding: 10,
         alignSelf: "center",
     },
     stepContainer: {
-        height: 50,
-        marginTop: 20,
-        margin: 5,
+        height: scaleHeight * 50,
+        marginTop: scaleHeight * 48,
+        marginBottom: scaleHeight * 30,
+        // margin: 5,
         overflow: "hidden",
         alignItems: "center",
     },

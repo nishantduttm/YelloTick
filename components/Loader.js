@@ -1,24 +1,60 @@
-import { Text, StyleSheet } from "react-native";
-import AnimatedLoader from "react-native-animated-loader";
+import React, { useState, useEffect } from "react";
+import { Text, StyleSheet, View, Animated, Easing } from "react-native";
 import { BlurView } from "expo-blur";
 
 const Loader = ({ text, isVisible }) => {
+    const [animation] = useState(new Animated.Value(0));
+
+    useEffect(() => {
+        if (isVisible) {
+            startAnimation();
+        } else {
+            stopAnimation();
+        }
+    }, [isVisible]);
+
+    const startAnimation = () => {
+        Animated.sequence([
+            Animated.timing(animation, {
+                toValue: 1,
+                duration: 1000, // Duration for tick completion
+                easing: Easing.ease,
+                useNativeDriver: true,
+            }),
+            Animated.timing(animation, {
+                toValue: 0,
+                duration: 1000, // Duration for tick disappearing
+                easing: Easing.ease,
+                useNativeDriver: true,
+            }),
+        ]).start();
+    };
+
+    const stopAnimation = () => {
+        animation.setValue(0);
+    };
+
+    const scale = animation.interpolate({
+        inputRange: [0, 0.5, 1],
+        outputRange: [0, 1.2, 1], // Scale animation to make it appear and disappear
+    });
+
     return (
         <>
             {isVisible && (
                 <BlurView style={styles.otpCard} intensity={30} tint="dark">
-                    <AnimatedLoader
-                        visible={isVisible}
-                        overlayColor="rgba(255,255,255,0.75)"
-                        source={require("../assets/Animation - 1714282753110.json")}
-                        animationStyle={{
-                            width: 100,
-                            height: 100,
-                        }}
-                        speed={1}
+                    <Animated.View
+                        style={[
+                            styles.tickIcon,
+                            {
+                                transform: [{ scale }],
+                            },
+                        ]}
                     >
-                        <Text style={styles.textStyle}>{text}</Text>
-                    </AnimatedLoader>
+                        {/* Your tick icon or any visual representation */}
+                        <Text style={styles.tickText}>✔</Text>
+                    </Animated.View>
+                    <Text style={styles.textStyle}>{text}</Text>
                 </BlurView>
             )}
         </>
@@ -31,6 +67,7 @@ const styles = StyleSheet.create({
     textStyle: {
         fontWeight: "bold",
         fontSize: 14,
+        marginTop: 10,
     },
     otpCard: {
         flex: 1,
@@ -42,7 +79,16 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         elevation: 8,
-        // borderColor: "black",
         borderWidth: 4,
+    },
+    tickIcon: {
+        width: 100,
+        height: 100,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    tickText: {
+        fontSize: 50,
+        color: "#edb609",
     },
 });

@@ -53,11 +53,11 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     title: {
-        color: "#f02e51",
+        color: "#CA1F3F",
         fontSize: 40,
         fontWeight: "bold",
         textShadowRadius: 2,
-        textShadowColor: "#f02e51",
+        textShadowColor: "#CA1F3F",
         letterSpacing: 1,
     },
     buttonContainer: {

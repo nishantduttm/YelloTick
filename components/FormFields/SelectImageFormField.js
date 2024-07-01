@@ -4,6 +4,8 @@ import {
     TouchableOpacity,
     StyleSheet,
     Pressable,
+    View,
+    Image
 } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faStar, faImages } from "@fortawesome/free-solid-svg-icons";
@@ -11,9 +13,7 @@ import * as ImagePicker from "expo-image-picker";
 import * as DocumentPicker from "expo-document-picker";
 
 const SelectImageFormField = (props) => {
-    let placeHolder = `${props.placeHolder}${
-        props.error ? " (This field is required)" : ""
-    }`;
+    let placeHolder = `${props.placeHolder}${props.error ? " (Required)" : ""}`;
     const [imagePlaceHolder, setImagePlaceHolder] = useState(placeHolder);
     const selectImage = async () => {
         // No permissions request is necessary for launching the image library
@@ -54,14 +54,16 @@ const SelectImageFormField = (props) => {
                 style={styles.input}
                 placeholder={imagePlaceHolder}
                 editable={false}
-                placeholderTextColor={props.error ? "red" : "black"}
+                placeholderTextColor={props.error ? "red" : "grey"}
             />
             {props.required && (
-                <FontAwesomeIcon icon={faStar} style={styles.star} />
+                <View style={styles.imageContainer}>
+                    <Image source={require("../../assets/required.png")} />
+                </View>
             )}
-            <TouchableOpacity style={styles.imageIcon}>
-                <FontAwesomeIcon icon={faImages} style={styles.imageIcon} />
-            </TouchableOpacity>
+            <View style={styles.imageContainer}>
+                <Image source={require("../../assets/ImageGallery.png")} />
+            </View>
         </Pressable>
     );
 };
@@ -71,11 +73,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        width: "100%",
+        width: "80%",
+        alignSelf: "center",
         backgroundColor: "white",
-        marginTop: 20,
         borderRadius: 30,
-        padding: 2,
+        marginVertical: 10,
+        padding: 8,
         paddingHorizontal: 20,
     },
     input: {
@@ -90,13 +93,15 @@ const styles = StyleSheet.create({
         color: "#FFC40C",
         fontSize: 16,
         marginRight: 5,
+        alignSelf:"center"
     },
     imageIcon: {
         color: "black",
         fontSize: 16,
         fontWeight: "400",
-        position: "absolute",
-        right: 10,
+        marginRight:10,
+        alignItems:"center",
+        opacity:0.7
     },
 });
 

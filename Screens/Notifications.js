@@ -34,10 +34,10 @@ const NotificationItemStyle = StyleSheet.create({
         marginVertical: 10,
         flexDirection: "row",
         marginHorizontal: 5,
-        paddingVertical: 10,
-        paddingHorizontal: 10,
+        paddingVertical: 15,
+        paddingHorizontal: 20,
         width: "70%",
-        borderRadius: 20,
+        borderRadius: 30,
         alignSelf: "center",
         backgroundColor: "white",
     },
@@ -59,7 +59,7 @@ const MenuOptions = ({ style, onLogout }) => {
                 <Text style={menuStyle.itemText}>View Profile</Text>
                 <FontAwesomeIcon
                     icon={faShareNodes}
-                    color="#f02e51"
+                    color="#CA1F3F"
                     size={25}
                 />
             </View>
@@ -68,7 +68,7 @@ const MenuOptions = ({ style, onLogout }) => {
                 onPress={onLogout}
             >
                 <Text style={menuStyle.itemText}>Logout</Text>
-                <FontAwesomeIcon icon={faPowerOff} color="#f02e51" size={25} />
+                <FontAwesomeIcon icon={faPowerOff} color="#CA1F3F" size={25} />
             </Pressable>
             <View></View>
             <Image source={require("../assets/bottomimgeline.png")} />
@@ -90,7 +90,7 @@ const menuStyle = StyleSheet.create({
         justifyContent: "space-around",
     },
     itemText: {
-        color: "#f02e51",
+        color: "#CA1F3F",
         fontWeight: "bold",
     },
 });
@@ -118,7 +118,7 @@ const NotificationScreen = ({
     ];
     return (
         <LinearGradient
-            colors={["#f02e51", "#98001C"]}
+            colors={["#CA1F3F", "#98001C"]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.rootContainer}
@@ -139,7 +139,7 @@ const NotificationScreen = ({
                 </View>
                 <View style={styles.headingText}>
                     <Text style={styles.mainHeading}>Notifications</Text>
-                    <Text style={styles.subHeading}>Important Updates</Text>
+                    <Text style={styles.subHeading}>Important Updates!</Text>
                 </View>
             </View>
             <View style={styles.inputContainer}>
@@ -184,7 +184,7 @@ const NotificationScreen = ({
                 <View style={styles.addButton}>
                     <FontAwesomeIcon
                         icon={faAdd}
-                        color="#f02e51"
+                        color="#CA1F3F"
                         size={40}
                         style={{
                             elevation: 10,

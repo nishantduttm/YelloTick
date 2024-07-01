@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Dimensions } from "react-native";
 import FormField from "../FormFields/FormField";
 import NextButton from "../NextButton";
 import DropDownFormField from "../FormFields/DropDownFormField";
@@ -9,6 +9,12 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { showToast } from "../../utils/ToastUtils";
 
 const requiredFields = ["payment_id_other_upi"];
+
+const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height;
+const referenceHeight = 840;
+
+const scaleHeight = screenHeight / referenceHeight;
 
 const FormStep2 = (props) => {
     const [formData, setFormData] = useState({
@@ -49,54 +55,70 @@ const FormStep2 = (props) => {
         setFieldErrors(updatedFieldErrors);
         if (!Object.values(updatedFieldErrors).some((error) => error)) {
             props.onSubmit(formData);
-        }else{
-            showToast("Please fill all required fields")
+        } else {
+            showToast("Please fill all required fields");
         }
     };
 
     return (
-        <KeyboardAwareScrollView style={styles.formContainer}>
+        <>
             <Text style={styles.heading}> Social And Payment Details</Text>
-            <FormField
-                placeHolder="Just Dial/Indiamart URL"
-                fieldName="url_jd_im"
-                onChange={onChange}
-                keyboardType="url"
-            />
-            <FormField
-                placeHolder="Amazon/Flipkart Store URI"
-                fieldName="url_amz_fkt"
-                onChange={onChange}
-            />
-            <FormField
-                placeHolder="Any Other Social Link"
-                fieldName="url_other_social"
-                onChange={onChange}
-            />
-            <FormField
-                placeHolder="Business Website URL"
-                fieldName="url_business"
-                onChange={onChange}
-            />
-            <SelectImageFormField
-                placeHolder="Select QR Code"
-                fieldName="payment_qr_code"
-                onChange={onChange}
-            />
-            <PaymentIdFormField
-                placeHolder="Payment Id"
-                fieldName="payment_id_ptm_ppay_gpay"
-                onChange={onChange}
-            />
-            <FormField
-                placeHolder="Any Other UPI ID"
-                fieldName="payment_id_other_upi"
-                onChange={onChange}
-                required={true}
-                error={fieldErrors["payment_id_other_upi"]}
-            />
+            <KeyboardAwareScrollView style={styles.formContainer}>
+                <FormField
+                    placeHolder="Social URL 1"
+                    fieldName="url_social1"
+                    onChange={onChange}
+                />
+                <FormField
+                    placeHolder="Social URL 2"
+                    fieldName="url_social2"
+                    onChange={onChange}
+                />
+                <FormField
+                    placeHolder="Social URL 3"
+                    fieldName="url_social3"
+                    onChange={onChange}
+                />
+                <FormField
+                    placeHolder="Social URL 4"
+                    fieldName="url_social4"
+                    onChange={onChange}
+                />
+                <FormField
+                    placeHolder="Social URL 5"
+                    fieldName="url_social5"
+                    onChange={onChange}
+                />
+                <FormField
+                    placeHolder="Social URL 6"
+                    fieldName="url_social6"
+                    onChange={onChange}
+                />
+                <FormField
+                    placeHolder="Business Website URL"
+                    fieldName="url_business"
+                    onChange={onChange}
+                />
+                <SelectImageFormField
+                    placeHolder="Upload Payment QR Code"
+                    fieldName="payment_qr_code"
+                    onChange={onChange}
+                />
+                <PaymentIdFormField
+                    placeHolder="Payment Id"
+                    fieldName="payment_id_ptm_ppay_gpay"
+                    onChange={onChange}
+                />
+                <FormField
+                    placeHolder="Any Other UPI ID"
+                    fieldName="payment_id_other_upi"
+                    onChange={onChange}
+                    required={true}
+                    error={fieldErrors["payment_id_other_upi"]}
+                />
+            </KeyboardAwareScrollView>
             <NextButton text="Next" onClick={onSubmit} />
-        </KeyboardAwareScrollView>
+        </>
     );
 };
 
@@ -104,13 +126,15 @@ export default FormStep2;
 
 const styles = StyleSheet.create({
     formContainer: {
-        flex: 1,
+        height: scaleHeight * 380,
         width: "100%",
     },
     heading: {
         color: "white",
-        alignSelf: "center",
-        fontSize: 20,
+        alignSelf: "left",
+        fontSize: 16,
         marginTop: 5,
+        marginLeft: 48,
+        marginBottom: 5,
     },
 });

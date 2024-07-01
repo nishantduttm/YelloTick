@@ -1,9 +1,15 @@
 import { useState } from "react";
-import { View, Text, Input, StyleSheet } from "react-native";
+import { View, Text, Input, StyleSheet, Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { RadioButtonInput } from "react-native-simple-radio-button";
 import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+
+const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height;
+const referenceHeight = 840;
+
+const scaleHeight = screenHeight / referenceHeight;
 
 const SubscriptionCard = ({
     title,
@@ -45,8 +51,8 @@ const SubscriptionCard = ({
                     <Text
                         style={{
                             color: "white",
-                            fontSize: 20,
-                            fontWeight: "800",
+                            fontSize: 30,
+                            fontWeight: "900",
                         }}
                     >
                         {" "}
@@ -74,11 +80,11 @@ const styles = StyleSheet.create({
     container: {
         alignItems: "center",
         justifyContent: "center",
-        padding: 2,
-        marginTop: 2,
-        marginBottom: 5,
-        borderRadius: 15,
-        marginHorizontal: 10,
+        padding: 10,
+        marginTop: 1,
+        marginBottom: 1,
+        borderRadius: 35,
+        marginHorizontal: 20,
     },
     heading: {
         flexDirection: "row",
@@ -103,7 +109,8 @@ const styles = StyleSheet.create({
     },
     button: {
         padding: 5,
-        borderRadius: 15,
+        paddingVertical:6,
+        borderRadius: 20,
         paddingHorizontal: 30,
     },
     buttonText: {
@@ -113,12 +120,12 @@ const styles = StyleSheet.create({
     },
     title: {
         color: "white",
-        fontSize: 20,
+        fontSize: 15,
         fontWeight: "bold",
     },
     priceContainer: {
         flexDirection: "row",
-        marginVertical: 12,
+        marginVertical: 5,
         alignItems: "center",
     },
 });

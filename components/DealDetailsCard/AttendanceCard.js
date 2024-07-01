@@ -39,7 +39,7 @@ const AttendenceCard = () => {
             );
             return {
                 date,
-                style: isPresent ? { backgroundColor: "#f02e51" } : null,
+                style: isPresent ? { backgroundColor: "#CA1F3F" } : null,
                 textStyle: isPresent
                     ? { color: "white", fontWeight: "bold" }
                     : null,
@@ -56,7 +56,7 @@ const AttendenceCard = () => {
             <View style={styles.calenderContainer}>
                 <CalendarPicker
                     dayLabelsWrapper={{
-                        backgroundColor: "#f02e51",
+                        backgroundColor: "#CA1F3F",
                     }}
                     height={250}
                     width={300}
@@ -102,7 +102,7 @@ const AttendenceCard = () => {
                         setSelectedYear(date.getFullYear());
                     }}
                     selectedDayStyle={{
-                        backgroundColor: "#f02e51",
+                        backgroundColor: "#CA1F3F",
                     }}
                     selectedDayTextColor="white"
                     customDatesStyles={customDatesStyles}
@@ -132,11 +132,11 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     title: {
-        color: "#f02e51",
+        color: "#CA1F3F",
         fontSize: 40,
         fontWeight: "bold",
         textShadowRadius: 2,
-        textShadowColor: "#f02e51",
+        textShadowColor: "#CA1F3F",
         letterSpacing: 1,
     },
     buttonContainer: {

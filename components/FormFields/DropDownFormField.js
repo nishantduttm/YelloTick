@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
 const DropDownFormField = (props) => {
     const [value, setValue] = useState("");
-    let placeHolder = `${props.placeholder}${props.error ?  (" (This field is required)") : ""}`
+    let placeHolder = `${props.placeholder}${props.error ? " (Required)" : ""}`;
     const renderItem = (item) => {
         return (
             <View style={styles.item}>
@@ -15,18 +15,20 @@ const DropDownFormField = (props) => {
                         style={styles.icon}
                         color="black"
                         name="Safety"
-                        size={20}
+                        size={16}
                     />
                 )}
             </View>
         );
     };
-    
 
     return (
         <View style={styles.dropdown}>
             <Dropdown
-                placeholderStyle={[styles.placeholderStyle, {color: props.error ? "red" : "black"}]}
+                placeholderStyle={[
+                    styles.placeholderStyle,
+                    { color: props.error ? "rgba(255, 0, 0, 0.5)" : "grey" },
+                ]}
                 selectedTextStyle={styles.selectedTextStyle}
                 inputSearchStyle={styles.inputSearchStyle}
                 iconStyle={styles.iconStyle}
@@ -40,17 +42,37 @@ const DropDownFormField = (props) => {
                 value={value}
                 onChange={(item) => {
                     setValue(item.value);
-                    props.onChange(props.fieldName, item.value)
+                    props.onChange(props.fieldName, item.value);
                 }}
-                renderLeftIcon={() => (
-                    <AntDesign
-                        style={styles.icon}
-                        color="black"
-                        name="Safety"
-                        size={20}
-                    />
-                )}
                 renderItem={renderItem}
+                renderRightIcon={() => (
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Image
+                            style={{ marginRight: 5 }}
+                            source={require("../../assets/required.png")}
+                        />
+                        <View
+                            style={{
+                                backgroundColor: "white",
+                                elevation: 20,
+                                borderRadius: 20,
+                                height: 30,
+                                width: 30,
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <Image
+                                source={require("../../assets/DoubleDown.png")}
+                            />
+                        </View>
+                    </View>
+                )}
             />
         </View>
     );
@@ -61,10 +83,12 @@ export default DropDownFormField;
 const styles = StyleSheet.create({
     dropdown: {
         backgroundColor: "white",
-        marginTop: 20,
+        marginVertical: 10,
         borderRadius: 30,
-        padding: 2,
+        paddingVertical: 8,
         paddingHorizontal: 20,
+        width: "80%",
+        alignSelf: "center",
     },
     icon: {
         marginRight: 5,

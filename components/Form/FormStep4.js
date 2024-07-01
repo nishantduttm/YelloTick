@@ -7,11 +7,18 @@ import {
     Image,
     Alert,
     TouchableOpacity,
+    Dimensions
 } from "react-native";
 import NextButton from "../NextButton";
 import Button from "../Button";
 import * as FaceDetector from "expo-face-detector";
 import { showToast } from "../../utils/ToastUtils";
+
+const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height;
+const referenceHeight = 840;
+
+const scaleHeight = screenHeight / referenceHeight;
 
 export default function FormStep4(props) {
     const [type, setType] = useState(CameraType.front);
@@ -241,7 +248,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         overflow: "hidden",
         backgroundColor: "white",
-        height: 300,
+        height: scaleHeight * 290,
         width: "90%",
         margin: 10,
         marginHorizontal: 10,

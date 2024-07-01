@@ -1,5 +1,12 @@
 import React from "react";
-import { View, TextInput, TouchableOpacity, StyleSheet, Text } from "react-native";
+import {
+    View,
+    TextInput,
+    TouchableOpacity,
+    StyleSheet,
+    Text,
+    Image
+} from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faStar, faImages } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
@@ -9,20 +16,29 @@ const FormField = (props) => {
         props.onChange(props.fieldName, text);
     };
 
-    let placeHolder = `${props.placeHolder}${props.error ?  (" (This field is required)") : ""}`
+    let placeHolder = `${props.placeHolder}${
+        props.error ? " (Required)" : ""
+    }`;
     return (
         <View style={styles.inputContainer1}>
             <View style={styles.input}>
-            <TextInput
-                placeholder={placeHolder}
-                placeholderTextColor={props.error ? "red" : "black"}
-                keyboardType={props.keyboardType}
-                maxLength={props.maxLength}
-                onChangeText={handleTextChange}
-                value={props.value}
-            />
+                <TextInput
+                    placeholder={placeHolder}
+                    placeholderTextColor={
+                        props.error ? "rgba(255, 0, 0, 0.5)" : "grey"
+                    }
+                    keyboardType={props.keyboardType}
+                    maxLength={props.maxLength}
+                    onChangeText={handleTextChange}
+                    value={props.value}
+                    fontSize={16}
+                />
             </View>
-            {props.required && <FontAwesomeIcon icon={faStar} style={styles.star} />}
+            {props.required && (
+                <View style={styles.imageContainer}>
+                    <Image source={require("../../assets/required.png")} />
+                </View>
+            )}
         </View>
     );
 };
@@ -32,11 +48,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        width: "100%",
+        width: "80%",
+        alignSelf: "center",
         backgroundColor: "white",
-        marginTop: 20,
         borderRadius: 30,
-        padding: 2,
+        marginVertical: 10,
+        padding: 8,
         paddingHorizontal: 20,
     },
     input: {

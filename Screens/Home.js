@@ -5,7 +5,7 @@ import {
     Image,
     ImageBackground,
     Pressable,
-    Dimensions
+    Dimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -52,7 +52,7 @@ const MenuOptions = ({ style, onLogout }) => {
                 <Text style={menuStyle.itemText}>Share Report</Text>
                 <FontAwesomeIcon
                     icon={faShareNodes}
-                    color="#f02e51"
+                    color="#CA1F3F"
                     size={25}
                 />
             </View>
@@ -61,7 +61,7 @@ const MenuOptions = ({ style, onLogout }) => {
                 onPress={onLogout}
             >
                 <Text style={menuStyle.itemText}>Logout</Text>
-                <FontAwesomeIcon icon={faPowerOff} color="#f02e51" size={25} />
+                <FontAwesomeIcon icon={faPowerOff} color="#CA1F3F" size={25} />
             </Pressable>
             <View></View>
             <Image source={require("../assets/bottomimgeline.png")} />
@@ -89,7 +89,7 @@ const menuStyle = StyleSheet.create({
         justifyContent: "space-around",
     },
     itemText: {
-        color: "#f02e51",
+        color: "#CA1F3F",
         fontWeight: "bold",
     },
 });
@@ -163,14 +163,16 @@ const Home = ({
     }, []);
     useEffect(() => {
         SetCurrentPercentageAcheved(
-            safeDivisionPercentage(salesProfile["currentSales"], salesProfile["currentTarget"])
+            safeDivisionPercentage(
+                salesProfile["currentSales"],
+                salesProfile["currentTarget"]
+            )
         );
     }, [salesProfile]);
     return (
         <LinearGradient
-            colors={["#f02e51", "#98001C"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
+            colors={["#CA1F3F", "#CA1F3F", "#98001C"]}
+            locations={[0.22, 0.53, 1]}
             style={styles.rootContainer}
         >
             <View style={styles.heading}>
@@ -180,8 +182,7 @@ const Home = ({
                         onPress={onNotificationClicked}
                     >
                         <Image
-                            style={styles.icon}
-                            source={require("../assets/redbellicon.png")}
+                            source={require("../assets/NotificationIcon.png")}
                         />
                     </Pressable>
                     <Pressable
@@ -192,46 +193,48 @@ const Home = ({
                     >
                         <Image
                             style={styles.icon}
-                            source={require("../assets/baricon.png")}
+                            source={require("../assets/HamburgerIcon.png")}
                         />
                     </Pressable>
                 </View>
                 <View style={styles.greeting}>
                     <Text style={styles.goodMorningText}>{getGreeting()},</Text>
                     <Text style={styles.name}>
-                        {salesProfile ? salesProfile["firstName"] : "Nishant"}
+                        {salesProfile ? salesProfile["firstName"] : "Nishant"}!
                     </Text>
                 </View>
             </View>
             <View style={styles.inputContainer}>
-                <Pressable
-                    style={styles.addButtonContainer}
-                    onPress={onAddMerchantClicked}
-                >
-                    <View style={styles.plusIcon}>
-                        <FontAwesomeIcon
-                            icon={faPlus}
-                            color="#f02e51"
-                            size={30 * scaleHeight}
-                        />
-                    </View>
-                </Pressable>
                 <View style={styles.container1}>
-                    <View style={styles.targetContainer}>
-                        <View style={styles.percentageContainer}>
-                            <Text style={styles.percentageText}>
-                                {targetPercentageAcheived}%
-                            </Text>
-                            <Text style={styles.targetAcheivedText}>
-                                Target Achieved
+                    <View style={styles.percentAndAddButtonContainer}>
+                        <View style={styles.targetContainer}>
+                            <View style={styles.percentageContainer}>
+                                <Text style={styles.percentageText}>
+                                    {targetPercentageAcheived}%
+                                </Text>
+                                <Text style={styles.targetAcheivedText}>
+                                    Target Achieved
+                                </Text>
+                            </View>
+                            <Text style={styles.remainingTargetText}>
+                                {100 - targetPercentageAcheived}% remaining this
+                                month
                             </Text>
                         </View>
-                        <Text style={styles.remainingTargetText}>
-                            {100 - targetPercentageAcheived}% remaining this
-                            month
-                        </Text>
+                        <Pressable
+                            style={styles.addButtonContainer}
+                            onPress={onAddMerchantClicked}
+                        >
+                            <View style={styles.plusIcon}>
+                                <Image
+                                    source={require("../assets/PlusIcon.png")}
+                                />
+                            </View>
+                        </Pressable>
                     </View>
-                    <Image source={require("../assets/linesimg.png")} />
+                    <View style={styles.line}>
+                        <Image source={require("../assets/linesimg.png")} />
+                    </View>
                     <View style={styles.dealsContainer}>
                         <View style={styles.dealsRow1}>
                             <DealCard
@@ -265,14 +268,13 @@ const Home = ({
                             />
                         </View>
                     </View>
-                    <Image source={require("../assets/linesimg.png")} />
+                    <View style={styles.line}>
+                        <Image source={require("../assets/linesimg.png")} />
+                    </View>
                 </View>
             </View>
             <View style={styles.avatarContainer}>
-                <Image
-                    style={styles.avatar}
-                    source={require("../assets/manavatar.png")}
-                />
+                
             </View>
             {isMenuOpened && (
                 <MenuOptions style={styles.menuItem} onLogout={onLogout} />
@@ -289,7 +291,6 @@ const Home = ({
                             />
                             <NextButton
                                 style={{
-                                    width: "70%",
                                     marginTop: 0,
                                     borderWidth: 0,
                                 }}
@@ -425,7 +426,7 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         position: "absolute",
-        top: 180 * scaleHeight
+        top: 180 * scaleHeight,
         // paddingHorizontal: 20,
     },
     toggleBarIcon: {
@@ -450,12 +451,10 @@ const styles = StyleSheet.create({
     },
     toggleIconDiv: {
         elevation: 4,
-        backgroundColor: "#e81e43",
-        padding: 2 * scaleHeight,
-        overflow: "hidden",
+        shadowColor: "black",
         borderRadius: 100 * scaleHeight,
-        shadowOffset: { height: 0, width: 1 },
-        shadowOpacity: 0.8,
+        shadowOffset: { height: 1, width: 1 },
+        shadowOpacity: 1,
         height: 45 * scaleHeight,
         width: 45 * scaleHeight,
         justifyContent: "center",
@@ -463,19 +462,13 @@ const styles = StyleSheet.create({
         marginTop: 20 * scaleHeight,
     },
     bellIconDiv: {
-        elevation: 4,
-        backgroundColor: "white",
-        padding: 8 * scaleHeight,
-        overflow: "hidden",
         borderRadius: 27 * scaleHeight,
-        shadowOffset: { height: 0, width: 1 },
-        shadowOpacity: 0.8,
-        shadowRadius: 1,
         shadowColor: "black",
         justifyContent: "center",
         alignItems: "center",
         height: 45 * scaleHeight,
         width: 45 * scaleHeight,
+        backgroundColor: "white",
     },
     iconContainer: {
         position: "absolute",
@@ -484,12 +477,21 @@ const styles = StyleSheet.create({
         marginRight: 10 * scaleHeight,
     },
     icon: {
-        height:25 * scaleHeight,
-        width: 25 * scaleHeight
+        height: 65 * scaleHeight,
+        width: 65 * scaleHeight,
+    },
+    icon1: {
+        height: 20 * scaleHeight,
+        width: 20 * scaleHeight,
     },
     avatarContainer: {
         position: "absolute",
-        top: 50 * scaleHeight,
+        top: 100 * scaleHeight,
+        backgroundColor: "#D9D9D9",
+        height: 125,
+        width: 131,
+        marginLeft: 10,
+        borderRadius: 20,
     },
     greeting: {
         position: "absolute",
@@ -518,31 +520,41 @@ const styles = StyleSheet.create({
     },
     plusIcon: {
         borderRadius: 28 * scaleHeight,
-        elevation: 20,
-        padding: 10 * scaleHeight,
-        backgroundColor: "white",
+        alignSelf: "flex-end",
+        marginBottom: 40,
     },
     container1: {
         backgroundColor: "#F1F1F1",
-        margin: 10 * scaleHeight,
-        borderRadius: 10 * scaleHeight,
+        borderTopLeftRadius: 30 * scaleHeight,
         paddingVertical: 10 * scaleHeight,
+        marginTop: 70 * scaleHeight,
+        marginLeft: 20 * scaleHeight,
     },
     targetContainer: {
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
         marginVertical: 10 * scaleHeight,
+        marginLeft: 30,
     },
     dealsContainer: {},
-    dealsRow1: { flexDirection: "row", marginTop: 10 * scaleHeight, justifyContent:"center" },
-    dealsRow2: { flexDirection: "row", marginTop: 10 * scaleHeight, marginBottom: 10 * scaleHeight, justifyContent:"center" },
+    dealsRow1: {
+        flexDirection: "row",
+        marginTop: 10 * scaleHeight,
+        justifyContent: "center",
+    },
+    dealsRow2: {
+        flexDirection: "row",
+        marginTop: 10 * scaleHeight,
+        marginBottom: 10 * scaleHeight,
+        justifyContent: "center",
+    },
     percentageText: {
-        fontSize: 40 * scaleHeight,
-        color: "#f02e51",
+        fontSize: 60 * scaleHeight,
+        color: "#CA1F3F",
         fontWeight: "bold",
     },
     targetAcheivedText: {
-        color: "#f02e51",
+        color: "#CA1F3F",
         fontSize: 14 * scaleHeight,
         marginLeft: 10 * scaleHeight,
         fontWeight: "bold",
@@ -605,8 +617,16 @@ const styles = StyleSheet.create({
         top: 20 * scaleHeight,
         right: 10 * scaleHeight,
     },
-    avatar:{
-    }
+    avatar: {},
+    percentAndAddButtonContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: "100%",
+        justifyContent: "space-between",
+    },
+    line: {
+        marginLeft: 10,
+    },
 });
 
 export default Home;

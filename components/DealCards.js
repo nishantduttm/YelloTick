@@ -30,7 +30,7 @@ const dealCardsMapping = {
         secondaryColor: "#CA1F3F",
         buttonText: "Overview",
         icon: faReply,
-        strongColor: "#c71234",
+        strongColor: "#941029",
     },
     yourScore: {
         heading: "Your Score",

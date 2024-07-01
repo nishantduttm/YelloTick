@@ -150,6 +150,8 @@ const addMerchant = async (merchantData, onSuccess, onFailure) => {
         Authorization: `Bearer ${await getAccessToken()}`,
         "Content-Type": "multipart/form-data",
     };
+
+    console.log(merchantData);
     const formdata = new FormData();
 
     Object.entries(merchantData).forEach(([key, value]) => {

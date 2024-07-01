@@ -1,4 +1,11 @@
-import { Text, StyleSheet, View, Image, Pressable, Dimensions } from "react-native";
+import {
+    Text,
+    StyleSheet,
+    View,
+    Image,
+    Pressable,
+    Dimensions,
+} from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
     faUserCheck,
@@ -54,13 +61,21 @@ const NavigationItem = ({ type, onClick, disabled, disabledMessage }) => {
             }
         >
             <View style={styles.iconContainer}>
-                <FontAwesomeIcon icon={icon} color="white" size={25 * scaleHeight} />
+                <FontAwesomeIcon
+                    icon={icon}
+                    color="white"
+                    size={25 * scaleHeight}
+                />
             </View>
             <View style={styles.textContainer}>
                 <Text>{propMapping[type].text}</Text>
             </View>
             <View style={styles.angleContainer}>
-                <FontAwesomeIcon icon={faAnglesRight} color="white" size={16 * scaleHeight} />
+                <FontAwesomeIcon
+                    icon={faAnglesRight}
+                    color="white"
+                    size={16 * scaleHeight}
+                />
             </View>
         </Pressable>
     );
@@ -77,7 +92,7 @@ const styles = StyleSheet.create({
     },
     iconContainer: {
         padding: 25 * scaleHeight,
-        backgroundColor: "#f02e51",
+        backgroundColor: "#CA1F3F",
         borderRadius: 20 * scaleHeight,
         borderColor: "white",
         borderWidth: 8 * scaleHeight,

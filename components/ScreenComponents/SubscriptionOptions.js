@@ -17,8 +17,12 @@ const SubscriptionOptions = ({ onSubScriptionSelected }) => {
     return (
         <View style={styles.cardContainer}>
             <SubscriptionCard
-                primaryColor="#FFC40C"
-                secondaryColor="#EEECE5"
+                primaryColor={
+                    selectedSubscriptionIdx == 0 ? "#FFC40C" : "#000000"
+                }
+                secondaryColor={
+                    selectedSubscriptionIdx == 0 ? "#EEECE5" : "#CA1F3F"
+                }
                 title="Strike Membership"
                 price="799"
                 idx={0}
@@ -26,8 +30,12 @@ const SubscriptionOptions = ({ onSubScriptionSelected }) => {
                 onSelected={onSelectedHandler}
             />
             <SubscriptionCard
-                primaryColor="#FFC40C"
-                secondaryColor="#EEECE5"
+                primaryColor={
+                    selectedSubscriptionIdx == 1 ? "#FFC40C" : "#000000"
+                }
+                secondaryColor={
+                    selectedSubscriptionIdx == 1 ? "#EEECE5" : "#CA1F3F"
+                }
                 title="Strike up Membership"
                 price="1,499"
                 idx={1}
@@ -35,8 +43,12 @@ const SubscriptionOptions = ({ onSubScriptionSelected }) => {
                 onSelected={onSelectedHandler}
             />
             <SubscriptionCard
-                primaryColor="#000000"
-                secondaryColor="#CA1F3F"
+                primaryColor={
+                    selectedSubscriptionIdx == 2 ? "#FFC40C" : "#000000"
+                }
+                secondaryColor={
+                    selectedSubscriptionIdx == 2 ? "#EEECE5" : "#CA1F3F"
+                }
                 title="Digi Ease Pack"
                 price="14,999"
                 idx={2}

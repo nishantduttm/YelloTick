@@ -11,9 +11,18 @@ const PaymentIdFormField = (props) => {
     return (
         <View style={styles.inputContainer1}>
             <View style={styles.imageContainer}>
-                <Image source={require("../../assets/Google Pay.png")} />
-                <Image source={require("../../assets/Phone Pe.png")} />
-                <Image source={require("../../assets/Paytm.png")} />
+                <Image
+                    style={styles.upiImage}
+                    source={require("../../assets/Google Pay.png")}
+                />
+                <Image
+                    style={styles.upiImage}
+                    source={require("../../assets/Phone Pe.png")}
+                />
+                <Image
+                    style={[styles.upiImage, {marginLeft:5}]}
+                    source={require("../../assets/Paytm.png")}
+                />
             </View>
             <TextInput
                 style={styles.input}
@@ -29,20 +38,21 @@ const PaymentIdFormField = (props) => {
 };
 
 const styles = StyleSheet.create({
-    imageContainer:{
-        flexDirection:"row",
-        justifyContent:"space-between",
-        alignItems:"center"
+    imageContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
     },
     inputContainer1: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        width: "100%",
+        width: "80%",
+        alignSelf: "center",
         backgroundColor: "white",
-        marginTop: 20,
         borderRadius: 30,
-        padding: 2,
+        marginVertical: 10,
+        padding: 8,
         paddingHorizontal: 20,
     },
     input: {
@@ -66,6 +76,9 @@ const styles = StyleSheet.create({
         position: "absolute",
         right: 10,
     },
+    upiImage : {
+        marginLeft : 2
+    }
 });
 
 export default PaymentIdFormField;
